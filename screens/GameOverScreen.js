@@ -1,13 +1,16 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 
+import BodyText from '../components/BodyText';
+import TitleText from '../components/TitleText';
+
 const GameOverScreen = ({ rounds, userNumber, onNewGame }) => {
   return (
     <View style={styles.screen}>
-      <Text>Game Over!</Text>
-      <Text>Number of rounds: {rounds}</Text>
-      <Text>Number was: {userNumber}</Text>
-      <View>
+      <TitleText style={styles.gameOverTitle}>Game Over!</TitleText>
+      <BodyText>Number of rounds: {rounds}</BodyText>
+      <BodyText>Number was: {userNumber}</BodyText>
+      <View style={styles.buttonContainer}>
         <Button title="NEW GAME" onPress={onNewGame} />
       </View>
     </View>
@@ -19,6 +22,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  gameOverTitle: {
+    fontSize: 20
+  },
+  buttonContainer: {
+    marginVertical: 10
   }
 });
 

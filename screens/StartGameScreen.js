@@ -6,19 +6,54 @@ import {
   TextInput,
   Button,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
+  Alert
 } from 'react-native';
 import Colors from '../constants/colors';
 
 import Card from '../components/Card';
 import Input from '../components/Input';
+import NumberContainer from '../components/NumberContainer';
 
 const StartGameScreen = props => {
   const [inputValue, setInputValue] = useState('');
+  const [isConfirmed, setIsConfirmed] = useState(false);
+  const [selectedNumber, setSelectedNumber] = useState();
 
   const handleChangeInput = inputText => {
     setInputValue(inputText.replace(/[^0-9]/g, ''));
   };
+
+  const handleReset = () => {
+    setInputValue('');
+    setIsConfirmed(false);
+  };
+
+  const handleConfirm = () => {
+    const chosenNumber = parseInt(inputValue, 10);
+    if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
+      Alert.alert('Invalid number!', 'Number must be between 1 and 99.', [
+        { text: 'Okay', style: 'destructive', onPress: handleReset }
+      ]);
+      return;
+    }
+    setIsConfirmed(true);
+    setSelectedNumber(inputValue);
+    setInputValue('');
+    Keyboard.dismiss();
+  };
+
+  let confirmedOutput;
+
+  if (isConfirmed) {
+    confirmedOutput = (
+      <Card style={styles.summaryContainer}>
+        <Text>You selected</Text>
+        <NumberContainer>{selectedNumber}</NumberContainer>
+        <Button title="START GAME" />
+      </Card>
+    );
+  }
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -40,19 +75,20 @@ const StartGameScreen = props => {
             <View style={styles.button}>
               <Button
                 title="Reset"
-                onPress={() => {}}
+                onPress={handleReset}
                 color={Colors.secondary}
               />
             </View>
             <View style={styles.button}>
               <Button
                 title="Confirm"
-                onPress={() => {}}
+                onPress={handleConfirm}
                 color={Colors.primary}
               />
             </View>
           </View>
         </Card>
+        {confirmedOutput}
       </View>
     </TouchableWithoutFeedback>
   );
@@ -81,6 +117,10 @@ const styles = StyleSheet.create({
   },
   button: {
     width: 100
+  },
+  summaryContainer: {
+    marginTop: 20,
+    alignItems: 'center'
   }
 });
 

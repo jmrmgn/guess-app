@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Text, View, StyleSheet, Button, Alert } from 'react-native';
+import { Text, View, StyleSheet, Alert } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
 import TitleText from '../components/TitleText';
+import MainButton from '../components/MainButton';
 
 const LOWER = 'lower';
 const HIGHER = 'higher';
@@ -66,14 +68,12 @@ const GameScreen = ({ userChoice, onGameOver }) => {
       <TitleText style={styles.title}>Opponent's Guess</TitleText>
       <NumberContainer>{currentGuess}</NumberContainer>
       <Card style={styles.buttonContainer}>
-        <Button
-          title={LOWER.toUpperCase()}
-          onPress={handleNextGuess.bind(this, LOWER)}
-        />
-        <Button
-          title={HIGHER.toUpperCase()}
-          onPress={handleNextGuess.bind(this, HIGHER)}
-        />
+        <MainButton onPress={handleNextGuess.bind(this, LOWER)}>
+          <Ionicons name="md-arrow-dropdown" size={24} color="white" />
+        </MainButton>
+        <MainButton onPress={handleNextGuess.bind(this, HIGHER)}>
+          <Ionicons name="md-arrow-dropup" size={24} color="white" />
+        </MainButton>
       </Card>
     </View>
   );
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     marginTop: 20,
     width: 300,
-    maxWidth: '80%'
+    maxWidth: '90%'
   }
 });
 

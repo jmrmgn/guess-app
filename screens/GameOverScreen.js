@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, Button, Image } from 'react-native';
 import BodyText from '../components/BodyText';
 import TitleText from '../components/TitleText';
 import Colors from '../constants/colors';
+import MainButton from '../components/MainButton';
 
 const GameOverScreen = ({ rounds, userNumber, onNewGame }) => {
   const isSingleRound = rounds === 1;
@@ -28,7 +29,7 @@ const GameOverScreen = ({ rounds, userNumber, onNewGame }) => {
         </BodyText>
       </View>
       <View style={styles.buttonContainer}>
-        <Button title="NEW GAME" onPress={onNewGame} />
+        <MainButton onPress={onNewGame}>NEW GAME</MainButton>
       </View>
     </View>
   );
